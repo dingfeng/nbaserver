@@ -2,6 +2,8 @@ package data.playerdata;
 
 import static org.junit.Assert.*;
 
+import java.rmi.RemoteException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +30,7 @@ public class PlayerDataTest {
 		}
 	}
 	@Test
-	public void testGetAllPlayerData() {
+	public void testGetAllPlayerData() throws RemoteException {
 		PlayerPO[] players = player.getAllActivePlayerData();
 		
 		print(players);
@@ -36,42 +38,42 @@ public class PlayerDataTest {
 	}
 
 	@Test
-	public void testFindPlayer() {
+	public void testFindPlayer() throws RemoteException {
 		//未完成
 		HPlayerPO p = player.findPlayer("Kobe Bryant");
 //		print (p);
 	}
 
 	@Test
-	public void testGetPlayerOfTeam()
+	public void testGetPlayerOfTeam() throws RemoteException
 	{
 		PlayerPO[] players = player.getPlayersOfTeam("LAL");
 		print(players);
 	}
 	
 	@Test
-	public void testGetPlayerHigh() {
+	public void testGetPlayerHigh() throws RemoteException {
 		PlayerHighPO players = player.getPlayerHigh(2012, "Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testSortPlayerHighn() {
+	public void testSortPlayerHighn() throws RemoteException {
 		PlayerHighPO[] players = player.sortPlayerHighn(2003, "efficiency desc", 9, SeasonType.REGULAR);
 //		print(players);
 	    assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetPlayerNormalTotal() {
+	public void testGetPlayerNormalTotal() throws RemoteException {
 		PlayerNormalPO players = player.getPlayerNormalTotal(2013, "Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testSortPlayerNormalTotal() {
+	public void testSortPlayerNormalTotal() throws RemoteException {
 		PlayerNormalPO[] players = player.sortPlayerNormalTotal(2010, "rebs desc"
 				+ "", 10, SeasonType.PLAYOFF);
 //		print(players);
@@ -79,42 +81,42 @@ public class PlayerDataTest {
 	}
 
 	@Test
-	public void testGetPlayerNormalAve() {
+	public void testGetPlayerNormalAve() throws RemoteException {
         PlayerNormalPO normalPlayer = player.getPlayerNormalAve(2009, "Kobe Bryant", SeasonType.REGULAR);
 //        print(normalPlayer);
         assertEquals(true,true);
 	}
 
 	@Test
-	public void testSortPlayerNormalAven() {
+	public void testSortPlayerNormalAven() throws RemoteException {
 		PlayerNormalPO[] players = player.sortPlayerNormalAven(2012, "rebs", 67, SeasonType.PLAYOFF);
 //		print(players);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetPlayerAllSeasonsTotal() {
+	public void testGetPlayerAllSeasonsTotal() throws RemoteException {
 		PlayerNormalPO[] players =  player.getPlayerAllSeasonsTotal("Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetPlayerAllSeasonsAve() {
+	public void testGetPlayerAllSeasonsAve() throws RemoteException {
 		PlayerNormalPO[] players = player.getPlayerAllSeasonsAve("Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetPlayerAllSeasons() {
+	public void testGetPlayerAllSeasons() throws RemoteException {
 		PlayerHighPO[] players =  player.getPlayerAllSeasons("Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetSeasonAveData() {
+	public void testGetSeasonAveData() throws RemoteException {
 		PlayerNormalPO[] players =  player.getPlayerAllSeasonsAve("Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
@@ -126,7 +128,7 @@ public class PlayerDataTest {
 //		print(player.getPlayersOfTeam("LAL"));
 	}
 	@Test
-	public void testHplayer()
+	public void testHplayer() throws RemoteException
 	{
 		HPlayerPO[] players = player.getHPlayerByIni("a");
 //		print(players);
@@ -137,13 +139,13 @@ public class PlayerDataTest {
 //		print(player.screenPlayer("player_name desc", "W", "F", 10));
 	}
 	@Test
-	public void testMatchPlayer()
+	public void testMatchPlayer() throws RemoteException
 	{
 		MatchPlayerPO[] players = player.getSeasonMatches(2014, "Kobe Bryant", SeasonType.REGULAR);
 //		print (players);
 	}
 	@Test 
-	public void testSeasonTeamPlayer()
+	public void testSeasonTeamPlayer() throws RemoteException
 	{
 		PlayerNormalPO[] players = player.getSeasonPlayerNormalOfTeam(1999, SeasonType.PLAYOFF, "LAL");
 		print (players);

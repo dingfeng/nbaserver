@@ -33,6 +33,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import po.CurrentMatch;
+import po.CurrentPlayer;
+import po.CurrentTeam;
+
 
 public class Live
 {

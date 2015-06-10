@@ -1,6 +1,8 @@
 package data.teamdata;
 
 import java.awt.Image;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +16,9 @@ import data.playerdata.PlayerData;
 import dataservice.playerdataservice.SeasonType;
 import dataservice.teamdataservice.TeamDataService;
 
-public class TeamData implements TeamDataService{
+public class TeamData extends UnicastRemoteObject implements TeamDataService{
     private Connection conn;
-	public TeamData(Connection conn)
+	public TeamData(Connection conn)throws RemoteException
 	{
 		this.conn = conn;
 	}

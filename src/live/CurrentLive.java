@@ -29,6 +29,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import po.CurrentMatch;
+import po.CurrentPlayer;
+import po.CurrentTeam;
+
 public class CurrentLive {
 	public static void main(String[] args)
 	{

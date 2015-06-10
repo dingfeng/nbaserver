@@ -9,5 +9,5 @@ public interface  NBADataFactory
 {
 	public PlayerDataService getPlayerData();
 	public TeamDataService getTeamData();
-	MatchDataService getMatchData();
+	public MatchDataService getMatchData();
 }

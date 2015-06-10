@@ -2,6 +2,8 @@ package data.teamdata;
 
 import static org.junit.Assert.*;
 
+import java.rmi.RemoteException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,21 +35,21 @@ public class TeamDataTest {
 	}
 
 	@Test
-	public void testFindTeam() {
+	public void testFindTeam() throws RemoteException {
 		TeamPO team = teamData.findTeam("Hawks");
 		System.out.println(team);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetTeamNormalTotal() {
+	public void testGetTeamNormalTotal() throws RemoteException {
 		TeamNormalPO team = teamData.getTeamNormalTotal(1990, "ATL", SeasonType.PLAYOFF);
 //		System.out.println(team);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testSortTeamNormalTotaln() {
+	public void testSortTeamNormalTotaln() throws RemoteException {
 		TeamNormalPO[] teams  = teamData.sortTeamNormalTotaln(2014, "rebs desc", 3, SeasonType.REGULAR);
 //		for (TeamNormalPO t : teams)
 //		{
@@ -57,7 +59,7 @@ public class TeamDataTest {
 	}
 
 	@Test
-	public void testGetTeamNormalAve() {
+	public void testGetTeamNormalAve() throws RemoteException {
 		TeamNormalPO teams = teamData.getTeamNormalAve(2014, "ATL",SeasonType.REGULAR);
 //		print(teams);
 //		print(teams);
@@ -65,7 +67,7 @@ public class TeamDataTest {
 	}
 
 	@Test
-	public void testSortTeamNormalAven() {
+	public void testSortTeamNormalAven() throws RemoteException {
 		TeamNormalPO[] teams = teamData.sortTeamNormalAven(2013, "hitNo desc", 8, SeasonType.PLAYOFF);
 //		print (teams);
 		teams = teamData.sortTeamNormalAven(2012, "rebs desc", 6, SeasonType.REGULAR);
@@ -74,35 +76,35 @@ public class TeamDataTest {
 	}
 
 	@Test
-	public void testGetTeamHigh() {
+	public void testGetTeamHigh() throws RemoteException {
 		TeamHighPO team = teamData.getTeamHigh(1994, "CHI", SeasonType.PLAYOFF);
 //		print(team);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testSortTeamHighn() {
+	public void testSortTeamHighn() throws RemoteException {
 		TeamHighPO[] teams = teamData.sortTeamHighn(2011, "offenseRound desc", 10, SeasonType.REGULAR);
 //		print (teams);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetTeamSeasonNormalTotal() {
+	public void testGetTeamSeasonNormalTotal() throws RemoteException {
 		TeamNormalPO[] team = teamData.getTeamSeasonNormalTotal("ATL", SeasonType.PLAYOFF);
 //		print(team);
 		assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetTeamSeasonNormalAve() {
+	public void testGetTeamSeasonNormalAve() throws RemoteException {
            TeamNormalPO[] teams = teamData.getTeamSeasonNormalAve("NOP", SeasonType.REGULAR);
            print (teams);
            assertEquals(true,true);
 	}
 
 	@Test
-	public void testGetTeamSeasonHigh() {
+	public void testGetTeamSeasonHigh() throws RemoteException {
 		TeamHighPO[] teams = teamData.getTeamSeasonHigh("ATL", SeasonType.PLAYOFF);
 //		print(teams);
 		assertEquals(true,true);

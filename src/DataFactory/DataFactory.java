@@ -1,7 +1,9 @@
 package DataFactory;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 import data.matchdata.MatchData;
 import data.playerdata.PlayerData;
 import data.teamdata.TeamData;
@@ -40,7 +42,11 @@ public class DataFactory implements NBADataFactory{
 	public MatchDataService getMatchData() {
 		if (matchData == null)
 		{
-			matchData = new MatchData(conn);
+			try {
+				matchData = new MatchData(conn);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 		return matchData;
 	}
@@ -49,7 +55,11 @@ public class DataFactory implements NBADataFactory{
 	public PlayerDataService getPlayerData() {
 		if (playerData == null)
 		{
-			playerData = new PlayerData(conn);
+			try {
+				playerData = new PlayerData(conn);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 		return playerData;
 	}
@@ -58,7 +68,11 @@ public class DataFactory implements NBADataFactory{
 	public TeamDataService getTeamData() {
 		if (teamData == null)
 		{
-			teamData = new TeamData(conn);
+			try {
+				teamData = new TeamData(conn);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 		return teamData;
 	}

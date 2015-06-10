@@ -1,9 +1,10 @@
 package po;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class OldMatch {
+public class OldMatch implements Serializable{
        int matchId;
        String host_team;
        String guest_team;

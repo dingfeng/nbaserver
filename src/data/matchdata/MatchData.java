@@ -1,6 +1,8 @@
 package data.matchdata;
 
 import java.awt.Image;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,23 +13,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import live.CurrentMatch;
-import live.CurrentPlayer;
-import live.CurrentTeam;
-import live.SimpleMatchLive;
+import po.CurrentMatch;
+import po.CurrentPlayer;
+import po.CurrentTeam;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 import po.OldMatch;
+import po.SimpleMatchLive;
 import data.playerdata.PlayerData;
 import dataservice.matchdataservice.MatchDataService;
 import dataservice.playerdataservice.SeasonType;
 
-public class MatchData implements MatchDataService{
+public class MatchData extends UnicastRemoteObject implements MatchDataService{
 	   private Connection conn;
 	   private String sql_seasonMatches = "select * from matches where match_id > ? and match_id < ? ";
 	   private String sql_seasonMatches_r = "select * from matches where match_id > ? and match_id < ? order by match_id desc limit ?,?";
-	   public MatchData(Connection conn)
+	   public MatchData(Connection conn) throws RemoteException
 	   {
 		 this.conn = conn;
 	   }

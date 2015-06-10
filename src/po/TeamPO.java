@@ -1,9 +1,10 @@
 package po;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 
-public class TeamPO implements Comparable<TeamPO>{
+public class TeamPO implements Comparable<TeamPO>, Serializable{
 	private Image image; // 队伍图标
 	private String name; // 队伍名称
 	private String nameAbridge; // 名称缩写

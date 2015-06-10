@@ -294,7 +294,7 @@ public class Store {
           //然后将BufferedImage写到ByteArrayOutputStream输出流中  
           ByteArrayOutputStream stream = new ByteArrayOutputStream();  
           try {  
-              ImageIO.write(buf,"jpg",stream);  
+              ImageIO.write(buf,"png",stream);  
               //-----------------------  
               //ImageIO.write(buf, "jpg", new FileOutputStream("f:\\12.jpg"));//此句可以将image写到另一个文件里  
               //-----------------------  
