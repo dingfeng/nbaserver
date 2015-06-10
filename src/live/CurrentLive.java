@@ -32,6 +32,7 @@ import org.xml.sax.InputSource;
 import po.CurrentMatch;
 import po.CurrentPlayer;
 import po.CurrentTeam;
+import tool.ImageTool;
 
 public class CurrentLive {
 	public static void main(String[] args)

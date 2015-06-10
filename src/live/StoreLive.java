@@ -1,21 +1,33 @@
 package live;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import DataFactoryService.NBADataFactory;
 import po.CurrentMatch;
 import po.CurrentPlayer;
 import po.CurrentTeam;
-import DBtool.Store;
-import data.playerdata.PlayerData;
+import tool.ImageTool;
 import dataservice.matchdataservice.MatchDataService;
 import dataservice.playerdataservice.PlayerDataService;
 import dataservice.teamdataservice.TeamDataService;
@@ -152,7 +164,9 @@ public class StoreLive {
 	  {
 		  PreparedStatement statement = conn.prepareStatement(sql);
 		  statement.setString(1, teamName);
-		  Store.outImageTodb(img, statement, 2);
+		  outImageTodb(img, statement, 2);
+		  statement.execute();
+		  System.out.println(teamName+"sdf");
 	  }
 	  catch(Exception e)
 	  {
@@ -410,20 +424,87 @@ public class StoreLive {
         int  i  = 0;
 		public void run() {
 			System.out.println(++i);
-			try{
-			storeLive();
-			}catch(Exception e)
-			{
-				e.printStackTrace();
-			}
 			updateLive();
 		}
 	 };
 	 timer.schedule(task, 0,3000);
   }
-  public static void main(String[] args)
+  public static void outImageTodb(Image image, PreparedStatement statement,int i)
+  {
+  	  image = new ImageIcon(image).getImage();
+  	  BufferedImage buf = null;
+  	  try{
+  	  buf = new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_ARGB);
+  	  }catch (Exception e)
+  	  { 
+  		  try {
+				statement.setNull(i, java.sql.Types.BLOB);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+  		  return;
+  				 
+  	  }
+  	  Graphics2D g = (Graphics2D)buf.createGraphics();  
+  	  g.setColor(new Color(255,0,0));
+  	  g.setStroke(new BasicStroke(1));
+        g.drawImage(image,0,0,null);  
+        
+        g.dispose();  
+        //然后将BufferedImage写到ByteArrayOutputStream输出流中  
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();  
+        try {  
+            ImageIO.write(buf,"png",stream);  
+            //-----------------------  
+            //ImageIO.write(buf, "jpg", new FileOutputStream("f:\\12.jpg"));//此句可以将image写到另一个文件里  
+            //-----------------------  
+        }catch (Exception e) {  
+            System.out.println("imageio error!");  
+        }  
+        //将ByteArrayOutputStream的内容写到ByteArrayInputStream，供sql执行语句写入  
+        byte[] bytes = stream.toByteArray();  
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);  
+        try {  
+            //此处以更改ISBN为1的图书条目的image为例，image为blob类型  
+//            String sql = "update book set image = ? where ISBN = '1'";  
+            //此处将ByteArrayInputStream内容写入  
+            statement.setBinaryStream(i, in, bytes.length);  
+        }
+        catch (Exception e) {  
+            System.out.println("sql error!");  
+        }  
+  }
+  public static void main(String[] args) throws Exception 
   {
 	  StoreLive storeLive = new StoreLive();
+	  storeLive.storeLive();
 	  storeLive.beginUpdate();
+//	   String url = "jdbc:mysql://127.0.0.1:3306/nba?useUnicode=true&characterEncoding=utf8";
+////		String url = "jdbc:mysql://dingfeng:3306/nba";
+////		private String url = "jdbc:mysql://127.0.0.1:3306/nba";
+////		String url = "jdbc:mysql://dingfeng:3306/nba";
+//		 String driver = "com.mysql.jdbc.Driver";
+//		 Connection conn;
+//	   	 Class.forName(driver);
+////	   	 conn = DriverManager.getConnection(url,"root","");
+//	   	conn = DriverManager.getConnection(url,"root","");
+//	  Image cle = ImageIO.read(new URL("http://c2.hoopchina.com.cn//images/gamespace/team/CLE.png?v=20150401"));
+//	  String sql  = "insert into live_team_img values(?,?)";
+//	  cle = ImageTool.bytesToImage(ImageTool.imageToBytes_player(cle, "png", BufferedImage.TYPE_INT_ARGB));
+//	  for (int i = 0;i  < 10; ++i)
+//	  {
+//		  try
+//		  {
+//			  PreparedStatement statement = conn.prepareStatement(sql);
+//			  System.out.println(i);
+//			  statement.setString(1, i+"1");
+//			  outImageTodb(cle,statement,2);
+//			  statement.execute();
+//		  }
+//		  catch (Exception e)
+//		  {
+//			  e.printStackTrace();
+//		  }
+//	  }
   }
 }
