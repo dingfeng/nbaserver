@@ -1,7 +1,8 @@
-package data.teamdata;
+package test;
 
 import static org.junit.Assert.*;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 
 import org.junit.Before;
@@ -21,8 +22,7 @@ public class TeamDataTest {
     public void setUp()
     {
     	try {
-			NBADataFactory factory = DataFactory.instance();
-			teamData = factory.getTeamData();
+			teamData = (TeamDataService) Naming.lookup("rmi://127.0.0.1/TeamData");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

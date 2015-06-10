@@ -1,10 +1,12 @@
-package data.playerdata;
+package test;
 
 import static org.junit.Assert.*;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import po.HPlayerPO;
@@ -19,12 +21,11 @@ import DataFactoryService.NBADataFactory;
 
 public class PlayerDataTest {
     PlayerDataService player;
-	@Before 
+	@Before
 	public void setUp()
 	{
 		try {
-			NBADataFactory factory = DataFactory.instance();
-			player = factory.getPlayerData();
+			player = (PlayerDataService) Naming.lookup("rmi://127.0.0.1/PlayerData");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

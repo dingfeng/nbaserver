@@ -1,13 +1,15 @@
-package data.matchdata;
+package test;
 
 import static org.junit.Assert.*;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import po.CurrentMatch;
@@ -20,13 +22,12 @@ import dataservice.matchdataservice.MatchDataService;
 import dataservice.playerdataservice.SeasonType;
 
 public class MatchDataTest {
-    MatchDataService match;
+    MatchDataService match ;
 	@Before
 	public void setUp()
 	{
 		try {
-			NBADataFactory factory = DataFactory.instance();
-			match = factory.getMatchData();
+			match = (MatchDataService) Naming.lookup("rmi://127.0.0.1/MatchData");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

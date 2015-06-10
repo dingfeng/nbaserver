@@ -694,11 +694,14 @@ public PlayerPO[] getPlayersOfTeam(String team) {
 		return players;
 }
 @Override
-public PlayerPO[] screenPlayer(String sort, String match_area, String position,
+public PlayerPO[] screenPlayer(String sort, String match_area, String player_area,String position,
 		int n) {
 	String sql = "select * from mplayer m where ";
 	String s1 = " m.position like "+"'%"+position+"%' and ";
-	String s2 = "exists(select p.match_area from player_team  p where p.match_area = '"+match_area+"' and p.player_name = m.player_name)";
+	String s2 = "exists(select p.match_area from player_team  p where ";
+	String s31 = "p.match_area = '"+match_area+"'";
+	String s4 = "and p.player_area = '"+player_area+"'";
+	String s5 = "and p.player_name = m.player_name)";
 	if (sort == null)
 	{
 		sort = " player_name desc";
@@ -708,9 +711,18 @@ public PlayerPO[] screenPlayer(String sort, String match_area, String position,
 	{
 		sql+=s1;
 	}
-	if (match_area != null)
+	if (match_area != null || player_area != null)
 	{
 		sql += s2;
+		if (match_area != null)
+		{
+			sql += s31;
+		}
+		if (player_area != null)
+		{
+			sql += s4;
+		}
+		sql += s5;
 	}
 	sql += s3;
 	ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(3500);
