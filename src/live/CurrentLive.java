@@ -74,7 +74,7 @@ public class CurrentLive {
 		dateStr = dateArray[0]+"-"+String.valueOf(Integer.parseInt(dateArray[1]))+"-"+String.valueOf(Integer.parseInt(dateArray[2]));
 		indexUrl += dateStr;
 		print(indexUrl);
-//		indexUrl = "http://g.hupu.com/nba/2015-6-8";
+		indexUrl = "http://g.hupu.com/nba/2015-6-5";
 		Iterator<String> itr = WebTool.getWebCon(indexUrl);
 		initUrls(itr);
     }
@@ -377,11 +377,17 @@ public class CurrentLive {
 			rate1[i] = temp1[i+3];
 			rate2[i] = temp2[i+3];
 		}
-		String[] points_temp = new String[points1.size()-9];
+		int count = 0;
+		for (count=0; count < points1.size(); ++count)
+		{
+			if (points1.get(count).equals(teams[0]))
+				break;
+		}
+		String[] points_temp = new String[points1.size()-count-2];
 		String totalScores_temp = null;
 		for (int i = 0; i < points_temp.length; i++)
 		{
-			points_temp[i] = points1.get(i+8);
+			points_temp[i] = points1.get(i+count+1);
 		}
 		totalScores_temp = points1.get(points1.size()-1);
 		

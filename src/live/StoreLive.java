@@ -1,5 +1,6 @@
 package live;
 
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,6 +11,8 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import DBtool.Store;
+import data.playerdata.PlayerData;
 import dataservice.matchdataservice.MatchDataService;
 import dataservice.playerdataservice.PlayerDataService;
 import dataservice.teamdataservice.TeamDataService;
@@ -42,7 +45,12 @@ public class StoreLive {
 	  ArrayList<CurrentMatch> list = live.getAllMatches();
 	  for (int i = 0 ;i <list.size();++i)
 	  {
+		  try{
 		  storeLiveMatch(list.get(i));
+		  }catch (Exception e)
+		  {
+			  e.printStackTrace();
+		  }
 	  }
   }
   
@@ -128,10 +136,25 @@ public class StoreLive {
      {
     	 storePlayers(match_id,benches[i],teamName,0);
      }
+     storeImg(team.getTeamName(),team.getImg());
      }catch(Exception e)
      {
     	 e.printStackTrace();
      }
+  }
+  private void storeImg(String teamName,Image img)
+  {
+	  String sql = "insert into live_team_img values(?,?)";
+	  try
+	  {
+		  PreparedStatement statement = conn.prepareStatement(sql);
+		  statement.setString(1, teamName);
+		  Store.outImageTodb(img, statement, 2);
+	  }
+	  catch(Exception e)
+	  {
+		  e.printStackTrace();
+	  }
   }
   private void storePlayers(int matchId,CurrentPlayer player, String teamName,int first)
   {
@@ -384,6 +407,12 @@ public class StoreLive {
         int  i  = 0;
 		public void run() {
 			System.out.println(++i);
+			try{
+			storeLive();
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			updateLive();
 		}
 	 };
@@ -392,7 +421,6 @@ public class StoreLive {
   public static void main(String[] args)
   {
 	  StoreLive storeLive = new StoreLive();
-	  storeLive.storeLive();
 	  storeLive.beginUpdate();
   }
 }
