@@ -828,7 +828,7 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
                 	{
                 		datas[i] = results.getString(4+i);
                 	}
-                	datas[0] = results.getString(1);
+                	datas[0] = results.getString("player_name");
                    list.add(new CurrentPlayer(datas));
                 }
                 players = new CurrentPlayer[list.size()];
