@@ -915,8 +915,75 @@ public PlayerNormalPO[] getSeasonPlayerNormalOfTeam(int season, SeasonType type,
 	}
 	return result;
 }
+
 @Override
 public PlayerImage getPlayerImage(String playerName) {
 	return new PlayerImage(this.getImage(playerName));
+}
+@Override
+public PlayerPO findActivePlayerPO(String playerName) throws RemoteException
+{
+	String sql = "select player_id,player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer where player_name = ?";
+	PlayerPO player = null;
+	try
+	{
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, playerName);
+		ResultSet result = statement.executeQuery();
+		if (result.next())
+		{
+			player = toPlayerPO(result);
+		}
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return player;
+}
+@Override
+public String[] fuzzilySearchActivePlayer(String info) throws RemoteException {
+	String sql = "select player_name from mplayer where player_name like '"+info+"%'";
+	String[] result = null;
+	try
+	{
+		PreparedStatement statement = conn.prepareStatement(sql);
+		ResultSet results = statement.executeQuery();
+		ArrayList<String> list = new ArrayList<String>();
+		while (results.next())
+		{
+			list.add(results.getString(1));
+		}
+		result = new String[list.size()];
+		list.toArray(result);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return result;
+}
+@Override
+public PlayerPO[] fuzzilySearchAvtivePlayerPO(String info)
+		throws RemoteException {
+	String sql = "select player_id,player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer where player_name like '"+info+"%'";
+	ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(50);
+	PlayerPO[] players = null;
+	try
+	{
+	  PreparedStatement statement = conn.prepareStatement(sql);
+	  ResultSet results = statement.executeQuery();
+	  while (results.next())
+	  {
+		list.add(toPlayerPO(results));
+	  }
+	  players = new PlayerPO[list.size()];
+	  list.toArray(players);
+	}
+	catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	return players;
 }
 }

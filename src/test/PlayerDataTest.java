@@ -34,7 +34,7 @@ public class PlayerDataTest {
 	public void testGetAllPlayerData() throws RemoteException {
 		PlayerPO[] players = player.getAllActivePlayerData();
 		
-		print(players);
+//		print(players);
 		assertEquals(true,true);
 	}
 
@@ -49,7 +49,7 @@ public class PlayerDataTest {
 	public void testGetPlayerOfTeam() throws RemoteException
 	{
 		PlayerPO[] players = player.getPlayersOfTeam("LAL");
-		print(players);
+//		print(players);
 	}
 	
 	@Test
@@ -143,13 +143,29 @@ public class PlayerDataTest {
 	public void testMatchPlayer() throws RemoteException
 	{
 		MatchPlayerPO[] players = player.getSeasonMatches(2014, "Kobe Bryant", SeasonType.REGULAR);
-		print (players);
+//		print (players);
 	}
 	@Test 
 	public void testSeasonTeamPlayer() throws RemoteException
 	{
 		PlayerNormalPO[] players = player.getSeasonPlayerNormalOfTeam(1999, SeasonType.PLAYOFF, "LAL");
-		print (players);
+//		print (players);
+	}
+	@Test
+	public void testPlayerPOFind() throws RemoteException
+	{
+//		print(player.findActivePlayerPO("Kobe Bryant"));
+	}
+	@Test 
+	public void testPlayerFuzzilySearch() throws RemoteException
+	{
+//		print(player.fuzzilySearchActivePlayer("A"));
+	}
+	@Test 
+	public void testPlayerFuzzilySearchPlayerPO() throws RemoteException
+	{
+		print("ddddddddddddddddddddddddddddddddddddddddddddd");
+		print(player.fuzzilySearchAvtivePlayerPO("A"));
 	}
 	public static void print(Object[] objects)
     {

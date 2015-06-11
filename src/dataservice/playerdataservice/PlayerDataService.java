@@ -209,6 +209,13 @@ public interface PlayerDataService extends Remote{
 	 * @throws RemoteException  可能抛出rmi异常
 	 */
 	public PlayerImage getPlayerImage(String playerName)throws RemoteException;
+	/**
+	 * 
+	 */
+	//获得现役球员
+	public String[] fuzzilySearchActivePlayer(String playerName)throws RemoteException;
+	public PlayerPO[] fuzzilySearchAvtivePlayerPO(String playerName) throws RemoteException;
+    public PlayerPO findActivePlayerPO(String info) throws RemoteException;
 //	public PlayerNormalPO[] sortPlayerNormalTotalHis(String sort, int n);
 //	public PlayerNormalPO sortPlayerNormalAveHis(String sort, int n);
 }
