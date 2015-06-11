@@ -192,8 +192,22 @@ public interface PlayerDataService extends Remote{
 	 */
 	public MatchPlayerPO[] getSeasonMatches(int season, String name, SeasonType type)throws RemoteException;
 	//获得某个赛季球队球员的数据
+	/**
+	 * 获得某个赛季球队中的球员数据<br/>
+	 * @param season    赛季
+	 * @param type      赛季类型
+	 * @param teamName  球队名
+	 * @return          球员基础数据
+	 * @throws RemoteException   可能抛出rmi异常
+	 */
 	public PlayerNormalPO[] getSeasonPlayerNormalOfTeam(int season, SeasonType type,String teamName)throws RemoteException;
 	//获得球员
+	/**
+	 * 获得球员图片<br/>
+	 * @param playerName        球员名
+	 * @return                  球员图片
+	 * @throws RemoteException  可能抛出rmi异常
+	 */
 	public PlayerImage getPlayerImage(String playerName)throws RemoteException;
 //	public PlayerNormalPO[] sortPlayerNormalTotalHis(String sort, int n);
 //	public PlayerNormalPO sortPlayerNormalAveHis(String sort, int n);

@@ -1,3 +1,11 @@
+/**
+ *Project Name : nba
+ *File Name: TeamDataService.java
+ *Package Name : dataservice.teamdataservice
+ *Date:2015-6-11下午 13:00：01
+ * Copyright(c) 2015,南京大学软件学院13级宇宙无敌工作组 All Rights Reserved
+ * 
+ */
 package dataservice.teamdataservice;
 
 import java.rmi.Remote;

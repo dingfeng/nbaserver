@@ -384,7 +384,7 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
         	return s;
         }
 
-		public MatchesPO[] getPlayerOffMatches(int season){
+		public MatchesPO[] getPlayOffMatches(int season){
 			   MatchesPO[] result  = null;
 			   try{
 //			    conn = DriverManager.getConnection(url,"root","");
@@ -424,7 +424,7 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
 				return result;
 		}
 
-		public MatchesPO[] getPlayerOffPlayerMatches(int season, String name) {
+		public MatchesPO[] getPlayOffPlayerMatches(int season, String name) {
 
 			String sql  = "select match_id from match_player where match_id > ? and match_id < ? and player_name = ?";
 		    int[] id_scope = getPlayerOffMatchId(season);
@@ -459,7 +459,7 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
 			return result;
 		}
 
-		public MatchesPO[] getPlayerOffTeamMatches(int season, String teamName) {
+		public MatchesPO[] getPlayOffTeamMatches(int season, String teamName) {
 			String sql = "select match_id from match_team where match_id > ? and match_id < ? and teama = ?";
 			int[] id_scope = getPlayerOffMatchId(season);
 			int matchId = -1;
@@ -568,7 +568,7 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
 		}
 
 		@Override
-		public MatchesPO[] getPlayerOffPlayerMatchesn(int season, String name,
+		public MatchesPO[] getPlayOffPlayerMatchesn(int season, String name,
 				int n) {
 			String sql  = "select match_id from match_player where match_id > ? and match_id < ? and player_name = ? "
 					+ " order by match_id desc limit "+n;
@@ -605,7 +605,7 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
 		}
 
 		@Override
-		public MatchesPO[] getPlayerOffTeamMatchesn(int season,
+		public MatchesPO[] getPlayOffTeamMatchesn(int season,
 				String teamName, int n) {
 			String sql = "select match_id from match_team where match_id > ? and match_id < ? and teama = ? "
 					+ " order by match_id desc limit "+n;
