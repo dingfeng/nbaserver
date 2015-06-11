@@ -18,11 +18,11 @@ public class Server {
     	   MatchDataService matchData = factory.getMatchData();
     	   LocateRegistry.createRegistry(1099);
     	   Naming.rebind("PlayerData", playerData);
-    	   System.out.println("PlayerData  server is ready");
+    	   System.out.println("PlayerData  server is ready!");
     	   Naming.rebind("TeamData",teamData);
-    	   System.out.println("TeamData server is ready");
+    	   System.out.println("TeamData server is ready!");
     	   Naming.rebind("MatchData", matchData);
-    	  System.out.println("MatchData server is  ready");
+    	  System.out.println("MatchData server is  ready!");
        }
        
 }

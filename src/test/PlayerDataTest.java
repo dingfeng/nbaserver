@@ -143,7 +143,7 @@ public class PlayerDataTest {
 	public void testMatchPlayer() throws RemoteException
 	{
 		MatchPlayerPO[] players = player.getSeasonMatches(2014, "Kobe Bryant", SeasonType.REGULAR);
-//		print (players);
+		print (players);
 	}
 	@Test 
 	public void testSeasonTeamPlayer() throws RemoteException

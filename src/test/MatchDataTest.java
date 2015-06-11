@@ -130,7 +130,7 @@ public class MatchDataTest {
 	@Test 
 	public void testMatchId() throws RemoteException
 	{
-		print(match.getMatchById(1960001));
+//		print(match.getMatchById(11940001));
 	}
 	public static void print(Object[] objects)
     {
