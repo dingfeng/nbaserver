@@ -333,7 +333,7 @@ public class PlayerData extends UnicastRemoteObject implements PlayerDataService
 			sql = "select * from player_season_normal where ave = ? and season = ? and player_name = ? ";
 			break;
 		case PLAYOFF:
-			sql = "select * from player_season_normal_playeroff where ave = ? and season = ? and player_name = ?";
+			sql = "select * from player_season_normal_playoff where ave = ? and season = ? and player_name = ?";
 			break;
 		}
 		try
@@ -675,10 +675,10 @@ public PlayerPO[] getPlayersOfTeam(String team) {
 			+ " where a.team = ?";
 		ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(3500);
 		PlayerPO[] players = null;
-		
+		 PreparedStatement statement = null;
 		try
 		{
-		  PreparedStatement statement = conn.prepareStatement(sql);
+		 statement = conn.prepareStatement(sql);
 		  statement.setString(1, team);
 		  ResultSet results = statement.executeQuery();
 		  while (results.next())
@@ -690,6 +690,7 @@ public PlayerPO[] getPlayersOfTeam(String team) {
 		}
 		catch (Exception e)
 		{
+			System.out.println(statement);
 			e.printStackTrace();
 		}
 		return players;
@@ -698,22 +699,26 @@ public PlayerPO[] getPlayersOfTeam(String team) {
 public PlayerPO[] screenPlayer(String sort, String match_area, String player_area,String position,
 		int n) {
 	String sql = "select * from mplayer m where ";
-	String s1 = " m.position like "+"'%"+position+"%' and ";
+	String s1 = " m.position like "+"'%"+position+"%'  ";
 	String s2 = "exists(select p.match_area from team  p where ";
-	String s31 = "p.match_area = '"+match_area+"'";
-	String s4 = "and p.player_area = '"+player_area+"'";
-	String s5 = "and p.name_abr = m.team)";
+	String s31 = " p.match_area = '"+match_area+"'";
+	String s4 = " p.player_area = '"+player_area+"'";
+	String s5 = " and p.name_abr = m.team)";
 	if (sort == null)
 	{
-		sort = " player_name desc";
+		sort = " player_name desc ";
 	}
-	String s3 = " order by"+" "+sort +" limit "+n;
+	String s3 = " order by "+" "+sort +" limit "+n;
 	if (position!=null)
 	{
 		sql+=s1;
 	}
 	if (match_area != null || player_area != null)
 	{
+		if (position != null)
+		{
+			sql += " and ";
+		}
 		sql += s2;
 		if (match_area != null)
 		{
@@ -721,6 +726,8 @@ public PlayerPO[] screenPlayer(String sort, String match_area, String player_are
 		}
 		if (player_area != null)
 		{
+			if (match_area != null)
+				sql += s31;
 			sql += s4;
 		}
 		sql += s5;
@@ -728,9 +735,10 @@ public PlayerPO[] screenPlayer(String sort, String match_area, String player_are
 	sql += s3;
 	ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(3500);
 	PlayerPO[] players = null;
+	 PreparedStatement statement = null;
 	try
 	{
-	  PreparedStatement statement = conn.prepareStatement(sql);
+	  statement = conn.prepareStatement(sql);
 	  ResultSet results = statement.executeQuery();
 	  while (results.next())
 	  {
@@ -741,6 +749,7 @@ public PlayerPO[] screenPlayer(String sort, String match_area, String player_are
 	}
 	catch (Exception e)
 	{
+		System.out.println(statement);
 		e.printStackTrace();
 	}
 	return players;

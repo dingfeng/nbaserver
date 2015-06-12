@@ -79,7 +79,7 @@ public class CurrentLive {
 		dateStr = dateArray[0]+"-"+String.valueOf(Integer.parseInt(dateArray[1]))+"-"+String.valueOf(Integer.parseInt(dateArray[2]));
 		indexUrl += dateStr;
 		print(indexUrl);
-		indexUrl = "http://g.hupu.com/nba/2015-6-5";
+//		indexUrl = "http://g.hupu.com/nba/2015-6-5";
 		Iterator<String> itr = WebTool.getWebCon(indexUrl);
 		initUrls(itr);
     }

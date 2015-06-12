@@ -477,7 +477,12 @@ public class StoreLive {
   public static void main(String[] args) throws Exception 
   {
 	  StoreLive storeLive = new StoreLive();
+	  try{
 	  storeLive.storeLive();
+	  }catch(Exception e)
+	  {
+		  e.printStackTrace();
+	  }
 	  storeLive.beginUpdate();
 //	   String url = "jdbc:mysql://127.0.0.1:3306/nba?useUnicode=true&characterEncoding=utf8";
 ////		String url = "jdbc:mysql://dingfeng:3306/nba";

@@ -135,9 +135,9 @@ public class PlayerDataTest {
 //		print(players);
 	}
 	@Test
-	public void testScreen()
+	public void testScreen() throws RemoteException
 	{
-//		print(player.screenPlayer("player_name desc", "W", "F", 10));
+		print(player.screenPlayer(null, "W", "SouthWest","F", 10));
 	}
 	@Test
 	public void testMatchPlayer() throws RemoteException
