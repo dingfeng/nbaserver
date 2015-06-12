@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import org.junit.Before;
 import org.junit.Test;
 
+import po.HotPlayerTeam;
 import po.TeamHighPO;
 import po.TeamNormalPO;
 import po.TeamPO;
@@ -108,6 +109,12 @@ public class TeamDataTest {
 		TeamHighPO[] teams = teamData.getTeamSeasonHigh("ATL", SeasonType.PLAYOFF);
 //		print(teams);
 		assertEquals(true,true);
+	}
+	@Test
+	public void testHotTeam() throws RemoteException
+	{
+		HotPlayerTeam[] teams = teamData.getHotTeam(2014, "rebs",SeasonType.PLAYOFF);
+		print(teams);
 	}
     public static void print(Object[] objects)
     {

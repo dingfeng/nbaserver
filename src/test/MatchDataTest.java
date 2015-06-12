@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import po.CurrentMatch;
+import po.HotPlayerTeam;
 import po.MatchesPO;
 import po.OldMatch;
 import po.SimpleMatchLive;
@@ -65,7 +66,7 @@ public class MatchDataTest {
 	@Test
 	public void testGetMatches() throws RemoteException {
 		MatchesPO[] matches = match.getMatches(toDate("2005-05-01"));
-//		print(matches);
+		print(matches);
 		assertEquals(true,true);
 	}
 

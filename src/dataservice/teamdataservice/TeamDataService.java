@@ -12,6 +12,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import dataservice.playerdataservice.SeasonType;
+import po.HotPlayerTeam;
 import po.TeamHighPO;
 import po.TeamNormalPO;
 import po.TeamPO;
@@ -173,4 +174,12 @@ public interface TeamDataService extends Remote{
 	 * @throws RemoteException   有可能抛出网络异常
 	 */
 	public TeamHighPO[] getTeamSeasonHigh(String teama,SeasonType type)throws RemoteException;
+	/**
+	 * 获得赛季热点球队<br/>
+	 * @param sort                热点类型       
+	 * @param seasonType          赛季类型
+	 * @return                    前五名的热点球队
+	 * @throws RemoteException    有可能抛出网络异常
+	 */
+	public HotPlayerTeam[] getHotTeam(int season,String sort,SeasonType seasonType)throws RemoteException;
 }

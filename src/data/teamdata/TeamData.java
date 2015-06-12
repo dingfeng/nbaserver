@@ -7,8 +7,10 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import po.HotPlayerTeam;
 import po.TeamHighPO;
 import po.TeamNormalPO;
 import po.TeamPO;
@@ -420,6 +422,49 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 			e.printStackTrace();
 		}
 		return teams;
+	}
+	@Override
+	public HotPlayerTeam[] getHotTeam(int season,String sort, SeasonType seasonType)
+			throws RemoteException {
+		String sql = null;
+		HotPlayerTeam[] players = null;
+		switch(seasonType)
+		{
+		case REGULAR:
+			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal t where t.season = ? and t.ave = 1 order by t."+sort+" desc limit 5";
+			break;
+		case PLAYOFF:
+			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal_playoff t where t.season = ? and t.ave = 1 order by t."+sort+" desc limit 5";
+			break;
+		}
+		try
+		{
+			ArrayList<HotPlayerTeam> list = new ArrayList<HotPlayerTeam>();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, season);
+			System.out.println(statement);
+			ResultSet results = statement.executeQuery();
+			while (results.next())
+			{
+				list.add(toPlayerTeam(results));
+			}
+			players = new HotPlayerTeam[list.size()];
+			list.toArray(players);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return players;
+	}
+	private HotPlayerTeam toPlayerTeam(ResultSet result) throws Exception
+	{
+		String name_total  = result.getString(1);
+		String name_abr = result.getString(2);
+		double hotData = result.getDouble(3);
+		Image action = PlayerData.blobToImage(result.getBlob(4));
+		String name = name_total + " / "+name_abr;
+		return new  HotPlayerTeam( action,  name,  hotData);
 	}
 
 }
