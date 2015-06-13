@@ -183,5 +183,10 @@ public interface TeamDataService extends Remote{
 	 * @throws RemoteException    有可能抛出网络异常
 	 */
 	public HotPlayerTeam[] getHotTeam(int season,String hot,SeasonType seasonType)throws RemoteException;
+	/**
+	 * 获得所有球队图片
+	 * @return                  所有球队图片
+	 * @throws RemoteException  有可能抛出网络异常
+	 */
 	public TeamPlayerImage[] getAllTeams() throws RemoteException;
 }

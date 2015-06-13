@@ -610,40 +610,7 @@ public HPlayerPO[] getHPlayerByIni(String ini) {
 	  }
 	  return teams;
   }
-//  
-//  public void deal()
-//  {
-//	  String sql = "insert into player_team(player_name, teama,match_area) values(?,?,?)";
-//	  String s1 = "select player_name from hplayerinfo";
-//	  try
-//	  {
-// 		  PreparedStatement statement = conn.prepareStatement(s1);
-//          ArrayList<String> list = new ArrayList<String>();
-//          ResultSet results = statement.executeQuery();
-//          while(results.next())
-//          {
-//        	  list.add(results.getString(1));
-//          }
-//          Iterator<String> itr = list.iterator();
-//          int i = 0;
-//          while(itr.hasNext())
-//          {
-//        	  String name = itr.next();
-//        	  System.out.println((++i)+ " "+name);
-//        	  String[] strs = getTeam(name);
-//        	  statement = conn.prepareStatement(sql);
-//        	  statement.setString(1, name);
-//        	  statement.setString(2, strs[0]);
-//        	  statement.setString(3, strs[1]);
-//        	  statement.execute();
-//          }
-//	  }
-//	  catch(Exception e)
-//	  {
-//		  e.printStackTrace();
-//	  }
-//  }
-//  
+
   public Image getImage(String playerName)
   {
 	  
@@ -707,12 +674,16 @@ public PlayerPO[] getPlayersOfTeam(String team) {
 @Override
 public PlayerPO[] screenPlayer(String sort, String match_area, String player_area,String position,
 		int n) {
-	String sql = "select * from mplayer m where ";
+	String sql = "select * from mplayer m ";
 	String s1 = " m.position like "+"'%"+position+"%'  ";
 	String s2 = "exists(select p.match_area from team  p where ";
 	String s31 = " p.match_area = '"+match_area+"'";
 	String s4 = " p.player_area = '"+player_area+"'";
 	String s5 = " and p.name_abr = m.team)";
+	if (match_area != null || player_area != null || position != null)
+	{
+		sql += " where ";
+	}
 	if (sort == null)
 	{
 		sort = " player_name desc ";
