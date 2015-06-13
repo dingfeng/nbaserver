@@ -14,6 +14,7 @@ import po.HotPlayerTeam;
 import po.TeamHighPO;
 import po.TeamNormalPO;
 import po.TeamPO;
+import po.TeamPlayerImage;
 import data.playerdata.PlayerData;
 import dataservice.playerdataservice.SeasonType;
 import dataservice.teamdataservice.TeamDataService;
@@ -464,6 +465,28 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		Image action = PlayerData.blobToImage(result.getBlob(4));
 		String name = name_total + " / "+name_abr;
 		return new  HotPlayerTeam( action,  name,  hotData);
+	}
+	@Override
+	public TeamPlayerImage[] getAllTeams() throws RemoteException {
+		String sql = "select name_abr,photo from team";
+		TeamPlayerImage[] images =null;
+		try
+		{
+			ArrayList<TeamPlayerImage> list = new ArrayList<TeamPlayerImage>();
+			PreparedStatement statement =  conn.prepareStatement(sql);
+	        ResultSet results = statement.executeQuery();
+	        while (results.next())
+	        {
+	        	list.add(new TeamPlayerImage(PlayerData.blobToImage(results.getBlob("photo")),results.getString("name_abr")));
+	        }
+	        images = new TeamPlayerImage[list.size()];
+	        list.toArray(images);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return images;
 	}
 
 }

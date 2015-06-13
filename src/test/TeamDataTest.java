@@ -12,6 +12,7 @@ import po.HotPlayerTeam;
 import po.TeamHighPO;
 import po.TeamNormalPO;
 import po.TeamPO;
+import po.TeamPlayerImage;
 import DataFactory.DataFactory;
 import DataFactoryService.NBADataFactory;
 import dataservice.playerdataservice.SeasonType;
@@ -115,6 +116,12 @@ public class TeamDataTest {
 	{
 		HotPlayerTeam[] teams = teamData.getHotTeam(2014, "rebs",SeasonType.PLAYOFF);
 		print(teams);
+	}
+	@Test 
+	public void testAllTeam() throws RemoteException
+	{
+		TeamPlayerImage[] images = teamData.getAllTeams();
+		print(images);
 	}
     public static void print(Object[] objects)
     {

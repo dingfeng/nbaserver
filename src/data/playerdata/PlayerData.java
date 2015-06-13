@@ -17,6 +17,7 @@ import po.PlayerHighPO;
 import po.PlayerImage;
 import po.PlayerNormalPO;
 import po.PlayerPO;
+import po.TeamPlayerImage;
 import data.matchdata.MatchData;
 import dataservice.playerdataservice.PlayerDataService;
 import dataservice.playerdataservice.SeasonType;
@@ -727,7 +728,7 @@ public PlayerPO[] screenPlayer(String sort, String match_area, String player_are
 		if (player_area != null)
 		{
 			if (match_area != null)
-				sql += s31;
+				sql += " and ";
 			sql += s4;
 		}
 		sql += s5;
@@ -994,5 +995,27 @@ public PlayerPO[] fuzzilySearchAvtivePlayerPO(String info)
 		e.printStackTrace();
 	}
 	return players;
+}
+@Override
+public TeamPlayerImage[] getAllPlayerImage() throws RemoteException {
+	String sql = "select player_name,photo_action from mplayer";
+	TeamPlayerImage[] images = null;
+	try
+	{
+		ArrayList<TeamPlayerImage> list = new ArrayList<TeamPlayerImage>();
+		PreparedStatement statement = conn.prepareStatement(sql);
+		ResultSet results = statement.executeQuery();
+		while (results.next())
+		{
+			list.add(new TeamPlayerImage(PlayerData.blobToImage(results.getBlob("photo_action")),results.getString("player_name")));
+		}
+		images = new TeamPlayerImage[list.size()];
+		list.toArray(images);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return images;
 }
 }

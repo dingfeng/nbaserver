@@ -12,7 +12,8 @@ public class main {
 	  TimerTask task = new TimerTask()
 	  {
 		@Override
-		public void run() {
+		public void run()
+		{
 			System.gc();
 		}
 	  };

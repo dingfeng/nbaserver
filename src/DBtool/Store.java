@@ -156,7 +156,7 @@ public class Store {
 //    		int id = playerOffids[i];
 //    		StoreOneSeason(season,id);
 //    	}
-    	StoreOneSeason(regularRoot+"88-89",1880000);
+    	StoreOneSeason("F:/14-15",12140000);
 
      }
      

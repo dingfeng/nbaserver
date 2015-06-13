@@ -14,6 +14,7 @@ import po.MatchPlayerPO;
 import po.PlayerHighPO;
 import po.PlayerNormalPO;
 import po.PlayerPO;
+import po.TeamPlayerImage;
 import dataservice.playerdataservice.PlayerDataService;
 import dataservice.playerdataservice.SeasonType;
 import DataFactory.DataFactory;
@@ -166,6 +167,12 @@ public class PlayerDataTest {
 	{
 		print("ddddddddddddddddddddddddddddddddddddddddddddd");
 		print(player.fuzzilySearchAvtivePlayerPO("A"));
+	}
+	@Test
+	public void testGetAllPlayerImage() throws RemoteException
+	{
+		TeamPlayerImage[] images = player.getAllPlayerImage();
+		print(images);
 	}
 	public static void print(Object[] objects)
     {

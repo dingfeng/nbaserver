@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 public class ConvertTemp {
 	public static void main(String[] args) throws Exception
 	{
-		BufferedWriter logw = new BufferedWriter(new FileWriter("F:/seasons/log.txt",true));
+		BufferedWriter logw = new BufferedWriter(new FileWriter("H:/test/log.txt",true));
 		ConvertTemp temp = new ConvertTemp();
-		File file = new File("k:/temp/");
+		File file = new File("H:/test/temp");
 		File[] files = file.listFiles();
 		for (File f : files)
 		{
@@ -35,7 +35,7 @@ public class ConvertTemp {
 		content.toArray(contentArray);
 		String result[] = temp.convert(contentArray);
 		String season = contentArray[0];
-		String dir = "K:/temp/"+season;
+		String dir = "H:/test/completed/"+season;
 		File dirFile = new File(dir);
 		if (!dirFile.exists())
 			dirFile.mkdirs();
@@ -44,7 +44,6 @@ public class ConvertTemp {
 		bw.close();
 		}catch (Exception e)
 		{
-			System.out.println(f.getName());
 			e.printStackTrace();
 			logw.append(f.getName());
 			logw.newLine();
