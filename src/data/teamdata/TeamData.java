@@ -431,10 +431,10 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		switch(seasonType)
 		{
 		case REGULAR:
-			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal t where t.season = ? and t.ave = 1 order by t."+sort+" desc limit 5";
+			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal t where t.season = ? and t.ave = 1 and m.name_abr = t.teamName order by t."+sort+" desc limit 5";
 			break;
 		case PLAYOFF:
-			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal_playoff t where t.season = ? and t.ave = 1 order by t."+sort+" desc limit 5";
+			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal_playoff t where t.season = ? and t.ave = 1 and m.name_abr = t.teamName order by t."+sort+" desc limit 5";
 			break;
 		}
 		try
@@ -442,7 +442,6 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 			ArrayList<HotPlayerTeam> list = new ArrayList<HotPlayerTeam>();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, season);
-			System.out.println(statement);
 			ResultSet results = statement.executeQuery();
 			while (results.next())
 			{
