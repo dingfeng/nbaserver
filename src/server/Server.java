@@ -10,12 +10,15 @@ import DataFactoryService.NBADataFactory;
 
 
 public class Server {
+	   public static TeamDataService teamData;
+	   public static PlayerDataService playerData;
+	   public static MatchDataService matchData;
        public void start() throws Exception
        {
     	   NBADataFactory factory = DataFactory.instance();
-    	   TeamDataService teamData = factory.getTeamData();
-    	   PlayerDataService playerData = factory.getPlayerData();
-    	   MatchDataService matchData = factory.getMatchData();
+    	   teamData = factory.getTeamData();
+    	   playerData = factory.getPlayerData();
+    	   matchData = factory.getMatchData();
     	   LocateRegistry.createRegistry(1099);
     	   Naming.rebind("PlayerData", playerData);
     	   System.out.println("PlayerData  server is ready!");

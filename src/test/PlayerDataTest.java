@@ -4,12 +4,17 @@ import static org.junit.Assert.*;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import po.HPlayerPO;
+import po.HotPlayerTeam;
+import po.HotType;
 import po.MatchPlayerPO;
 import po.PlayerHighPO;
 import po.PlayerNormalPO;
@@ -165,14 +170,30 @@ public class PlayerDataTest {
 	@Test 
 	public void testPlayerFuzzilySearchPlayerPO() throws RemoteException
 	{
-		print("ddddddddddddddddddddddddddddddddddddddddddddd");
-		print(player.fuzzilySearchAvtivePlayerPO("A"));
+//		print("ddddddddddddddddddddddddddddddddddddddddddddd");
+//		print(player.fuzzilySearchAvtivePlayerPO("A"));
 	}
 	@Test
 	public void testGetAllPlayerImage() throws RemoteException
 	{
 		TeamPlayerImage[] images = player.getAllPlayerImage();
-		print(images);
+//		print(images);
+	}
+	@Test
+	public void testPlayerHot() throws RemoteException
+	{
+		HotPlayerTeam[] hots = player.getDayHotPlayer(getDate("2014-06-10"), HotType.ASSIST);
+		print(hots);
+	}
+	public static Date getDate(String date)
+	{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    try {
+			return format.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 	public static void print(Object[] objects)
     {

@@ -9,15 +9,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import DBtool.MatchTeamPO;
 import po.HPlayerPO;
+import po.HotPlayerTeam;
+import po.HotType;
 import po.MatchPlayerPO;
+import po.MatchesPO;
 import po.PlayerHighPO;
 import po.PlayerImage;
 import po.PlayerNormalPO;
 import po.PlayerPO;
 import po.TeamPlayerImage;
+import server.Server;
+import tool.MinBinaryHeap;
 import data.matchdata.MatchData;
 import dataservice.playerdataservice.PlayerDataService;
 import dataservice.playerdataservice.SeasonType;
@@ -135,7 +143,7 @@ public class PlayerData extends UnicastRemoteObject implements PlayerDataService
 			sql = "select * from player_season_high where season = ? and playerName = ?";
 			break;
 		case PLAYOFF:
-			sql = "select * from player_season_high_playeroff where season = ? and playerName = ?";
+			sql = "select * from player_season_high_playoff where season = ? and playerName = ?";
 			break;
 		}
 
@@ -193,7 +201,7 @@ public class PlayerData extends UnicastRemoteObject implements PlayerDataService
 			sql = "select * from player_season_high where season = ? order by "+sort +" limit "+String.valueOf(n);
 			break;
 		case PLAYOFF:
-			sql = "select * from player_season_high_playeroff where season = ?  order by "+sort +" limit "+String.valueOf(n);
+			sql = "select * from player_season_high_playoff where season = ?  order by "+sort +" limit "+String.valueOf(n);
 			break;
 		}
 		try
@@ -225,7 +233,7 @@ public class PlayerData extends UnicastRemoteObject implements PlayerDataService
 			sql = "select * from player_season_normal where ave = ? and season = ? and player_name = ? ";
 			break;
 		case PLAYOFF:
-			sql = "select * from player_season_normal_playeroff where ave = ? and season = ? and player_name = ?";
+			sql = "select * from player_season_normal_playoff where ave = ? and season = ? and player_name = ?";
 			break;
 		}
 		try
@@ -1017,5 +1025,80 @@ public TeamPlayerImage[] getAllPlayerImage() throws RemoteException {
 		e.printStackTrace();
 	}
 	return images;
+}
+
+int season1;
+private  String convertDate(Date date)
+{
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	String result = format.format(date);
+	this.season1 = Integer.parseInt(result.substring(0, 4));
+	String s = result.substring(5, 10);
+	if (s.charAt(0) == '0')
+	{
+		--season1;
+	}
+	return s;
+}
+@Override
+public HotPlayerTeam[] getDayHotPlayer(Date date1,HotType type) throws RemoteException 
+{
+	MatchesPO[] matches= Server.matchData.getMatches(date1);
+	MinBinaryHeap<MatchPlayerPO> heap = new MinBinaryHeap<MatchPlayerPO>();
+	MatchPlayerPO[] temp = null;
+	HotPlayerTeam[] players = new HotPlayerTeam[5];
+	MatchesPO match = null;
+	for (int i = 0; i < matches.length; ++i)
+	{
+		match = Server.matchData.getMatchById(matches[i].getMatchId());
+		temp = match.getTeam1().getPlayers();
+		for (MatchPlayerPO p : temp)
+		{
+			setHotData(p,type);
+			heap.insert(p);
+		}
+		temp = match.getTeam2().getPlayers();
+		for (MatchPlayerPO p : temp)
+		{
+			setHotData(p,type);
+			heap.insert(p);
+		}
+	}
+	String name = null;
+	Image image = null;
+	double hotData = -1;
+	MatchPlayerPO player = null;
+	for (int i = 0; i < 5; ++i)
+	{
+		player = heap.deleteMin();
+		name = player.getName();
+		image = this.getImage(name);
+		hotData = player.getHotData();
+		players[i] = new HotPlayerTeam(image,name,hotData);
+	}
+	return players;
+}
+private void  setHotData(MatchPlayerPO player, HotType type)
+{
+	double hotData = -1;
+	switch (type)
+	{
+	case ASSIST :
+		hotData = player.getHelp();
+		break;
+	case BLOCK:
+		hotData = player.getBlockNo();
+		break;
+	case REBS:
+		hotData = player.getRebs();
+		break;
+	case SCORES:
+		hotData = player.getPoints();
+		break;
+	case STEALS:
+		hotData = player.getStealsNo();
+		break;
+	}
+	player.setHotData(hotData);
 }
 }
