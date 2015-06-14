@@ -474,7 +474,7 @@ public class PlayerData extends UnicastRemoteObject implements PlayerDataService
 		return players;
 	}
 	@Override
-	public PlayerHighPO[] getPlayerAllSeasons(String playerName, SeasonType type) {
+	public PlayerHighPO[] getPlayerAllSeasonsHigh(String playerName, SeasonType type) {
 		String sql = null;
 		PlayerHighPO[] players = null;
 		ArrayList<PlayerHighPO> list = new ArrayList<PlayerHighPO>();
@@ -1101,5 +1101,51 @@ private void loadImage()
 			e.printStackTrace();
 		}
 	}
+}
+
+public MatchPlayerPO[] getSeasonMatchesn(int season, String name, SeasonType type,int n) {
+	String sql = "select * from nba.match_player where match_id > ? and match_id < ? and player_name = ? order by match_id desc limit "+n;
+	int[] id_scope = null;
+	MatchPlayerPO[] players;
+	ArrayList<MatchPlayerPO> list = new ArrayList<MatchPlayerPO>();
+	
+	switch (type)
+	{
+	case REGULAR:
+		id_scope = MatchData.getMatchIdScope(season);
+		break;
+	case PLAYOFF:
+		id_scope = MatchData.getPlayerOffMatchId(season);
+		break;
+	}
+	try
+	{
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setInt(1, id_scope[0]);
+		statement.setInt(2, id_scope[1]);
+		statement.setString(3, name);
+		ResultSet results = statement.executeQuery();
+		MatchPlayerPO player = null;
+		String[] matchInfo = null;
+		String team = null;
+		String vsTeam = null;
+		while (results.next())
+		{
+			player = toMatchPlayer(results);
+			list.add(player);
+			matchInfo = this.getMatchInfo(player.getMatchId());
+			team = player.getTeamnameAbridge();
+			vsTeam = matchInfo[0].equals(team) ? matchInfo[1] : matchInfo[0];
+			player.setDate(matchInfo[2]);
+			player.setVSTeam(vsTeam);
+		}
+	}
+	catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	players = new MatchPlayerPO[list.size()];
+	list.toArray(players);
+	return players;
 }
 }

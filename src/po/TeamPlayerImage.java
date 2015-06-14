@@ -11,11 +11,19 @@ public class TeamPlayerImage implements Serializable{
     	   this.playerImage = new PlayerImage(image);
     	   this.name = name;
        }
+       /**
+        *获得图片 
+        * @return  图片
+        */
        public Image getImage()
        {
     	   return playerImage.getImage();
     	  
        }
+       /**
+        * 获得名字
+        * @return  名字
+        */
        public String getName()
        {
     	   return name;

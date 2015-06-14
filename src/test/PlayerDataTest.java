@@ -117,7 +117,7 @@ public class PlayerDataTest {
 
 	@Test
 	public void testGetPlayerAllSeasons() throws RemoteException {
-		PlayerHighPO[] players =  player.getPlayerAllSeasons("Kobe Bryant", SeasonType.REGULAR);
+		PlayerHighPO[] players =  player.getPlayerAllSeasonsHigh("Kobe Bryant", SeasonType.REGULAR);
 //		print(players);
 		assertEquals(true,true);
 	}
@@ -178,6 +178,12 @@ public class PlayerDataTest {
 	{
 		TeamPlayerImage[] images = player.getAllPlayerImage();
 //		print(images);
+	}
+	@Test
+	public void testGetMatchPlayerPOn() throws RemoteException
+	{
+		MatchPlayerPO[] players = player.getSeasonMatchesn(2014, "Lebron James", SeasonType.REGULAR, 5);
+	    print(players);
 	}
 	@Test
 	public void testPlayerHot() throws RemoteException

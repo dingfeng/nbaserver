@@ -50,6 +50,8 @@ import po.SimpleMatchLive;
 public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个赛季的常规赛比赛<br/>
+	 * ex:<br/>
+	 * getRegularSeasonMatches(1999,1,45)<br/>
 	 * @param season           赛季
 	 * @param low              按比赛的时间顺序
 	 * @param high
@@ -59,8 +61,8 @@ public interface MatchDataService extends Remote{
 	public MatchesPO[] getRegularSeasonMatches(int season,int low,int high)throws RemoteException;
 	/**
 	 * 获得常规赛某个赛季的某个球员的所有比赛<br/>
-	 * ex:<br/>
-	 * getRegularSeasonMatches(1999,1,45)<br/>
+	* ex:<br/>
+	 * getRegularPlayerMatches(1999,"Kobe Bryant")<br/>
 	 * @param season              赛季
 	 * @param name                球员名
 	 * @return                    该球员在该赛季的所有常规赛中参加的比赛
@@ -70,7 +72,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个球队某个赛季的的所有比赛<br/>
 	 * ex:<br/>
-	 * getRegularPlayerMatches(1999,"Kobe Bryant")<br/>
+	 * getRegularTeamMatches(2014,"LAL")<br/>
 	 * @param season              赛季
 	 * @param teamName            球队名
 	 * @return                    该球队在该赛季的所有常规赛中的比赛
@@ -80,7 +82,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个赛季的季后赛中的所有比赛<br/>
 	 * ex:<br/>
-	 * getRegularTeamMatches(2014,"LAL")<br/>
+	 * getPlayOffMatches(2014) <br/>
 	 * @param season           赛季
 	 * @return                 该赛季的所有季后赛
 	 * @throws RemoteException 有可能抛出网络异常
@@ -89,7 +91,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个球员在某个赛季的季后赛中参加的所有比赛<br/>
 	 * ex:<br/>
-	 * getPlayOffMatches(2014) <br/>
+	 * getPlayOffPlayerMatches(2014,"Kobe Bryant")<br/>
 	 * @param season            赛季
 	 * @param name              球员名
 	 * @return                  该球员在该赛季的季后赛中参加的所有比赛
@@ -99,7 +101,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个球队在某个季后赛中参加的所有比赛<br/>
 	 * ex:<br/>
-	 * getPlayOffPlayerMatches(2014,"Kobe Bryant")<br/>
+	 * getPlayOffTeamMatches(2014,"LAL")<br/>
 	 * @param season            赛季
 	 * @param teamName          球队名
 	 * @return                  该球队在该赛季季后赛中参加的所有比赛
@@ -109,7 +111,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某一天的球队参加的比赛<br/>
 	 * ex:<br/>
-	 * getPlayOffTeamMatches(2014,"LAL")<br/>
+	 * getTeamMatches(new Date(),"LAL")<br/>
 	 * @param date             日期
 	 * @param teamName         球队名
 	 * @return                 该球队在该日参加的比赛
@@ -119,7 +121,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 根据比赛编号查找比赛<br/>
 	 * ex:<br/>
-	 * getTeamMatches(new Date(),"LAL")<br/>
+	 * getMatchById(12140001)<br/>
 	 * @param matchId               比赛编号
 	 * @return                      该比赛编号代表的比赛
 	 * @throws RemoteException      有可能抛出网路异常
@@ -128,7 +130,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个日期中举行的所有比赛<br/>
 	 * ex:<br/>
-	 * getMatchById(12140001)<br/>
+	 * getMatches(new Date())<br/>
 	 * @param date                 日期
 	 * @return                     该日期中举行的所有比赛
 	 * @throws RemoteException     有可能抛出网络异常
@@ -137,7 +139,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得常规赛某个赛季球员参加的一定数量的比赛<br/>
 	 * ex:<br/>
-	 * getMatches(new Date())<br/>
+	 * getRegularPlayerMatchesn(2014,"Kobe Bryant",5)<br/>
 	 * @param season               赛季
 	 * @param name                 球员名
 	 * @param n                    数量
@@ -148,7 +150,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得常规赛某个赛季的某个球队的后几场比赛<br/>
 	 * ex:<br/>
-	 * getRegularPlayerMatchesn(2014,"Kobe Bryant",5)<br/>
+	 * getRegularTeamMatchesn(2014,"LAL",5)<br/>
 	 * @param season                 赛季
 	 * @param teamName               球队名
 	 * @param n                      比赛数量
@@ -159,7 +161,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个球员的在季后赛中的参加的后几场比赛<br/>
 	 * ex:<br/>
-	 * getRegularTeamMatchesn(2014,"LAL",5)<br/>
+	 * getPlayOffPlayerMatchesn(2014,"Kobe Bryant",6)<br/>
 	 * @param season               赛季
 	 * @param name                 球员名
 	 * @param n                    比赛数量
@@ -170,7 +172,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个球队在某个季后赛中参加的后几场比赛<br/>
 	 * ex:<br/>
-	 * getPlayOffPlayerMatchesn(2014,"Kobe Bryant",6)<br/>
+	 * getPlayOffTeamMatchesn(2014,"LAL",5)<br/>
 	 * @param season                赛季
 	 * @param teamName              球队名
 	 * @param n                     比赛场数
@@ -181,7 +183,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得所有正在直播的赛事<br/>
 	 * ex:<br/>
-	 * getPlayOffTeamMatchesn(2014,"LAL",5)<br/>
+	 * getAllLiveMatches()<br/>
 	 * @return                    所有正在直播的所有赛事
 	 * @throws RemoteException    有可能抛出网络异常
 	 */
@@ -189,7 +191,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得该比赛编号的直播赛事<br/>
 	 * ex:<br/>
-	 * getAllLiveMatches()<br/>
+	 * getLiveMatchesById(210115)<br/>
 	 * @param matchId
 	 * @return
 	 * @throws RemoteException
@@ -198,7 +200,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得某个球队的图片<br/>
 	 * ex:<br/>
-	 * getLiveMatchesById(210115)<br/>
+	 * getLiveTeamImg("LAL")<br/>
 	 * @param teamName           球队名
 	 * @return                   放回该球队的图片
 	 * @throws RemoteException   有可能抛出网络异常
@@ -208,7 +210,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 获得<=1984赛季的某个赛季按时间降序排序下某一段的比赛 指明常规赛和季后赛<br/>
 	 * ex:<br/>
-	 * getLiveTeamImg("LAL")<br/>
+	 * getOldMatch(2014,1,100,SeasonType.REGULAR)<br/>
 	 * @param season             
 	 * @param low
 	 * @param high
@@ -220,7 +222,7 @@ public interface MatchDataService extends Remote{
 	/**
 	 * 按照编号查找<=1984赛季之前的比赛<br/>
 	 * ex:<br/>
-	 * getOldMatch(2014,1,100,SeasonType.REGULAR)<br/>
+	 * getOldMatchInfo(12140001)<br/>
 	 * @param matchId            比赛编号
 	 * @return                   历史赛事
 	 * @throws RemoteException   有可能抛出网络异常

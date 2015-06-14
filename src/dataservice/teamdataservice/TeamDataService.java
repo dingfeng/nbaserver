@@ -51,6 +51,8 @@ public interface TeamDataService extends Remote{
 	//得到所有球队数据
 	/**
 	 * 获得所有球队数据<br/>
+	 * ex:<br/>
+	 * getAllTeamData()<br/>
 	 * @return                 返回所有球队的数据
 	 * @throws RemoteException 有可能抛出网络异常
 	 * @excample sdf
@@ -60,7 +62,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 球队缩写查找球队<br/>
 	 * ex:<br/>
-	 * getAllTeamData()<br/>
+	 * findTeam("LAL")<br/>
 	 * @param teamName
 	 * @return
 	 * @throws RemoteException
@@ -70,7 +72,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得球队的赛季赛季总数据<br/>
 	 * ex:<br/>
-	 * findTeam("LAL")<br/>
+	 * getTeamNormalTotal(2014,"LAL",SeasonType.REGULAR)<br/>
 	 * @param season            赛季
 	 * @param teama             球队
 	 * @param type              赛季类型
@@ -82,7 +84,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得球队排序赛季总数据<br/>
 	 * ex:<br/>
-	 * getTeamNormalTotal(2014,"LAL",SeasonType.REGULAR)<br/>
+	 * sortTeamNormalTotaln(2014,"rebs asc",5,SeasonType.REGULAR)<br/>
 	 * @param season            赛季
 	 * @param sort              排序依据
 	 * @param n                 数量
@@ -95,7 +97,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得球队赛季场均数据<br/>
 	 * ex:<br/>
-	 * sortTeamNormalTotaln(2014,"rebs asc",5,SeasonType.REGULAR)<br/>
+	 * getTeamNormalAve(2014,"LAL",SeasonType.REGULAR)<br/>
 	 * @param season             赛季
 	 * @param teama              球队缩写名
 	 * @param type               赛季类型
@@ -107,7 +109,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得球员排序场均数据<br/>
 	 * ex:<br/>
-	 * getTeamNormalAve(2014,"LAL",SeasonType.REGULAR)<br/>
+	 * sortTeamNormalAven(2014,"rebs asc",5,SeasonType.REGULAR)<br/>
 	 * @param season             赛季
 	 * @param sort               排序依据
 	 * @param n                  数量
@@ -120,7 +122,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得球员某个赛季的高阶数据<br/>
 	 * ex:<br/>
-	 * sortTeamNormalAven(2014,"rebs asc",5,SeasonType.REGULAR)<br/>
+	 * getTeamHigh(2014,"LAL",SeasonType.REGULAR)<br/>
 	 * @param season             赛季
 	 * @param teama              球队缩写名
 	 * @param type               赛季类型
@@ -132,7 +134,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得球员排序赛季高阶数据<br/>
 	 * ex:<br/>
-	 * getTeamHigh(2014,"LAL",SeasonType.REGULAR)<br/>
+	 * sortTeamHighn(2014,"rebs asc",5,SeasonType.REGULAR)<br/>
 	 * @param season               赛季
 	 * @param sort                 排序依据
 	 * @param n                    数量
@@ -146,7 +148,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得某个球队的所有赛季的总数据<br/>
 	 * ex:<br/>
-	 * sortTeamHighn(2014,"rebs asc",5,SeasonType.REGULAR)<br/>
+	 * getTeamSeasonNormalTotal("LAL",SeasonType.REGULAR)<br/>
 	 * @param teama              球队缩写名
 	 * @param type               赛季类型
 	 * @return                   所有该赛季该球队的基础数据总数据
@@ -157,7 +159,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得某个球员所有赛季的场均数据<br/>
 	 * ex:<br/>
-	 * getTeamSeasonNormalTotal("LAL",SeasonType.REGULAR)<br/>
+	 * getTeamSeasonNormalAve("LAL",SeasonType.REGULAR)<br/>
 	 * @param teama             球队缩写名
 	 * @param type              赛季类型
 	 * @return                  所有该赛季球队的基础数据场均数据
@@ -168,7 +170,7 @@ public interface TeamDataService extends Remote{
 	/**
 	 * 获得某个球员所有赛季的高阶数据<br/>
 	 * ex:<br/>
-	 * getTeamSeasonNormalAve("LAL",SeasonType.REGULAR)<br/>
+	 * getTeamSeasonHigh("LAL",SeasonType.REGULAR)<br/>
 	 * @param teama              球队缩写名
 	 * @param type               赛季类型
 	 * @return                   该球队在该类赛季下所有球队高阶数据
@@ -177,6 +179,8 @@ public interface TeamDataService extends Remote{
 	public TeamHighPO[] getTeamSeasonHigh(String teama,SeasonType type)throws RemoteException;
 	/**
 	 * 获得赛季热点球队<br/>
+	 * ex：<br/>
+	 * getHotTeam(1999,'rebs',SeasonType.REGULAR)<br/>
 	 * @param hot                 热点类型       
 	 * @param seasonType          赛季类型
 	 * @return                    前五名的热点球队
@@ -191,6 +195,8 @@ public interface TeamDataService extends Remote{
 	public TeamPlayerImage[] getAllTeams() throws RemoteException;
 	/**
 	 * 查找某球队图片<br/>
+	 * ex:<br/>
+	 * findTeamImage('LAL');<br/>
 	 * @param teama            球队缩写   
 	 * @return                 球队图标
 	 * @throws RemoteException 有可能抛出异常
