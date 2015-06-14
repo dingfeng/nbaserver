@@ -59,13 +59,13 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
     private TeamPO toTeamPO(ResultSet result) throws Exception
     {
     	Image image = null;
-    	String name = result.getString(2);
-    	String nameAbridge = result.getString(3);
-    	String address = result.getString(4);
-		String matchArea = result.getString(5);
-		String playerArea = result.getString(6);
-		String manage = result.getString(7);
-		int foundYear = result.getInt(8);
+    	String name = result.getString(1);
+    	String nameAbridge = result.getString(2);
+    	String address = result.getString(3);
+		String matchArea = result.getString(4);
+		String playerArea = result.getString(5);
+		String manage = result.getString(6);
+		int foundYear = result.getInt(7);
 		image =this.img_map.get(nameAbridge);
 		TeamPO team = new TeamPO( image,  name,  nameAbridge,  address,
 				 matchArea,  playerArea,  manage,  foundYear);
@@ -517,6 +517,10 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 			}
 			
 		}
+	}
+	@Override
+	public TeamPlayerImage findTeamImage(String teama) throws RemoteException {
+		return new TeamPlayerImage(img_map.get(teama),teama);
 	}
 
 }

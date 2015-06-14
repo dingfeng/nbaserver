@@ -45,7 +45,7 @@ public class PlayerData extends UnicastRemoteObject implements PlayerDataService
 		this.loadImage();
 	}
 	public PlayerPO[] getAllActivePlayerData() {
-		String sql = "select player_id,player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer";
+		String sql = "select player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer";
 		ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(3500);
 		PlayerPO[] players = null;
 		try
@@ -655,7 +655,7 @@ public PlayerHighPO[] getSeasonPlayerHigh(int season, SeasonType type) {
 }
 @Override
 public PlayerPO[] getPlayersOfTeam(String team) {
-	String sql = "select a.player_id,a.player_name,a.num,a.position,a.heightfeet,a.heightinch,a.weight,a.birth,a.age,a.exp,a.school from mplayer a "
+	String sql = "select a.player_name,a.num,a.position,a.heightfeet,a.heightinch,a.weight,a.birth,a.age,a.exp,a.school from mplayer a "
 			+ " where a.team = ?";
 		ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(3500);
 		PlayerPO[] players = null;
@@ -920,7 +920,7 @@ public PlayerImage getPlayerImage(String playerName) {
 @Override
 public PlayerPO findActivePlayerPO(String playerName) throws RemoteException
 {
-	String sql = "select player_id,player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer where player_name = ?";
+	String sql = "select player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer where player_name = ?";
 	PlayerPO player = null;
 	try
 	{
@@ -963,7 +963,7 @@ public String[] fuzzilySearchActivePlayer(String info) throws RemoteException {
 @Override
 public PlayerPO[] fuzzilySearchAvtivePlayerPO(String info)
 		throws RemoteException {
-	String sql = "select player_id,player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer where player_name like '"+info+"%'";
+	String sql = "select player_name,num,position,heightfeet,heightinch,weight,birth,age,exp,school from mplayer where player_name like '"+info+"%'";
 	ArrayList<PlayerPO> list = new ArrayList<PlayerPO>(50);
 	PlayerPO[] players = null;
 	try

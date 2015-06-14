@@ -189,4 +189,12 @@ public interface TeamDataService extends Remote{
 	 * @throws RemoteException  有可能抛出网络异常
 	 */
 	public TeamPlayerImage[] getAllTeams() throws RemoteException;
+	/**
+	 * 查找某球队图片<br/>
+	 * @param teama            球队缩写   
+	 * @return                 球队图标
+	 * @throws RemoteException 有可能抛出异常
+	 */
+	public TeamPlayerImage findTeamImage(String teama)throws RemoteException;
+	
 }
