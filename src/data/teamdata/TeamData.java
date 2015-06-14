@@ -1,6 +1,8 @@
 package data.teamdata;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Blob;
@@ -9,21 +11,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import po.HotPlayerTeam;
 import po.TeamHighPO;
 import po.TeamNormalPO;
 import po.TeamPO;
 import po.TeamPlayerImage;
+import tool.ImageTool;
 import data.playerdata.PlayerData;
 import dataservice.playerdataservice.SeasonType;
 import dataservice.teamdataservice.TeamDataService;
 
 public class TeamData extends UnicastRemoteObject implements TeamDataService{
     private Connection conn;
+    private String imagePath = "H:/image/team/";
+    private HashMap<String,Image> img_map = new HashMap<String,Image>();
 	public TeamData(Connection conn)throws RemoteException
 	{
 		this.conn = conn;
+		this.loadImages();
 	}
 	@Override
 	public TeamPO[] getAllTeamData() {
@@ -49,15 +58,15 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 	}
     private TeamPO toTeamPO(ResultSet result) throws Exception
     {
-    	Blob blob = result.getBlob(2);
-    	Image image = PlayerData.blobToImage(blob);
-    	String name = result.getString(3);
-    	String nameAbridge = result.getString(4);
-    	String address = result.getString(5);
-		String matchArea = result.getString(6);
-		String playerArea = result.getString(7);
-		String manage = result.getString(8);
-		int foundYear = result.getInt(9);
+    	Image image = null;
+    	String name = result.getString(2);
+    	String nameAbridge = result.getString(3);
+    	String address = result.getString(4);
+		String matchArea = result.getString(5);
+		String playerArea = result.getString(6);
+		String manage = result.getString(7);
+		int foundYear = result.getInt(8);
+		image =this.img_map.get(nameAbridge);
 		TeamPO team = new TeamPO( image,  name,  nameAbridge,  address,
 				 matchArea,  playerArea,  manage,  foundYear);
 		return team;
@@ -334,10 +343,10 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		switch(type)
 		{
 		case REGULAR:
-			sql = "select * from team_season_normal where ave = ? and teamName = ?";
+			sql = "select * from team_season_normal where ave = ? and teamName = ? order by season desc";
 			break;
 		case PLAYOFF:
-			sql = "select * from team_season_normal_playoff where ave = ? and teamName = ?";
+			sql = "select * from team_season_normal_playoff where ave = ? and teamName = ? order by season desc";
 			break;
 		}
 		try
@@ -367,10 +376,10 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		switch(type)
 		{
 		case REGULAR:
-			sql = "select * from team_season_normal where ave = ? and teamName = ?";
+			sql = "select * from team_season_normal where ave = ? and teamName = ? order by season desc";
 			break;
 		case PLAYOFF:
-			sql = "select * from team_season_normal_playoff where ave = ? and teamName = ?";
+			sql = "select * from team_season_normal_playoff where ave = ? and teamName = ? order by season desc";
 			break;
 		}
 		try
@@ -400,10 +409,10 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		switch(type)
 		{
 		case REGULAR:
-			sql = "select * from team_season_high where teamName = ?";
+			sql = "select * from team_season_high where teamName = ? order by season desc";
 			break;
 		case PLAYOFF:
-			sql = "select * from team_season_high_playoff where teamName = ?";
+			sql = "select * from team_season_high_playoff where teamName = ? order by season desc";
 			break;
 		}
 		try
@@ -432,10 +441,10 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		switch(seasonType)
 		{
 		case REGULAR:
-			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal t where t.season = ? and t.ave = 1 and m.name_abr = t.teamName order by t."+sort+" desc limit 5";
+			sql = "select m.name_total,m.name_abr,t."+sort+"  from team m,team_season_normal t where t.season = ? and t.ave = 1 and m.name_abr = t.teamName order by t."+sort+" desc limit 5";
 			break;
 		case PLAYOFF:
-			sql = "select m.name_total,m.name_abr,t."+sort+" ,m.photo from team m,team_season_normal_playoff t where t.season = ? and t.ave = 1 and m.name_abr = t.teamName order by t."+sort+" desc limit 5";
+			sql = "select m.name_total,m.name_abr,t."+sort+"  from team m,team_season_normal_playoff t where t.season = ? and t.ave = 1 and m.name_abr = t.teamName order by t."+sort+" desc limit 5";
 			break;
 		}
 		try
@@ -462,22 +471,23 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 		String name_total  = result.getString(1);
 		String name_abr = result.getString(2);
 		double hotData = result.getDouble(3);
-		Image action = PlayerData.blobToImage(result.getBlob(4));
 		String name = name_total + " / "+name_abr;
-		return new  HotPlayerTeam( action,  name,  hotData);
+		return new  HotPlayerTeam( img_map.get(name_abr),  name,  hotData);
 	}
 	@Override
 	public TeamPlayerImage[] getAllTeams() throws RemoteException {
-		String sql = "select name_abr,photo from team";
+		String sql = "select name_abr from team";
 		TeamPlayerImage[] images =null;
 		try
 		{
 			ArrayList<TeamPlayerImage> list = new ArrayList<TeamPlayerImage>();
 			PreparedStatement statement =  conn.prepareStatement(sql);
 	        ResultSet results = statement.executeQuery();
+	        String name = null;
 	        while (results.next())
 	        {
-	        	list.add(new TeamPlayerImage(PlayerData.blobToImage(results.getBlob("photo")),results.getString("name_abr")));
+	        	name = results.getString("name_abr");
+	        	list.add(new TeamPlayerImage(img_map.get(name),name));
 	        }
 	        images = new TeamPlayerImage[list.size()];
 	        list.toArray(images);
@@ -487,6 +497,26 @@ public class TeamData extends UnicastRemoteObject implements TeamDataService{
 			e.printStackTrace();
 		}
 		return images;
+	}
+	private void loadImages()
+	{
+		File file = new File(imagePath);
+		File[] files = file.listFiles();
+		Image image = null;
+		String name = null;
+		String[] array = null;
+		for (File f : files)
+		{
+			name = f.getName();
+			array = name.split("\\.");
+			try {
+				image = ImageIO.read(f);
+				img_map.put(array[0], image);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

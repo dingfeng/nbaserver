@@ -177,9 +177,9 @@ public class MatchData extends UnicastRemoteObject implements MatchDataService{
 		
 		public MatchesPO[] getMatches(Date date) {
 			String sql = "select match_id from matches where match_id > ? and match_id < ? and match_date = ?";
+			String dateStr = convertDate(date);
 			int[] id_scope = getMatchIdScope(season1);
 			int[] playerOff_scope = getPlayerOffMatchId(season1);
-			String dateStr = convertDate(date);
 			int matchId = -1;
 			MatchesPO match = null;
 			ArrayList<MatchesPO> list = new ArrayList<MatchesPO>(40);

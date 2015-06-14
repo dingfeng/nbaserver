@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 public class ImageTool {
    public static byte[]  imageToBytes_player(Image image,String format,int imageType)
    {
+	   if (image == null)
+		   return null;
 	   image = new ImageIcon(image).getImage();
 	   BufferedImage buf = new BufferedImage(image.getWidth(null),image.getHeight(null),imageType);
 	   Graphics2D g = (Graphics2D)buf.createGraphics();  

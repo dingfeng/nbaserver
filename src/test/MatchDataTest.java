@@ -65,7 +65,7 @@ public class MatchDataTest {
 
 	@Test
 	public void testGetMatches() throws RemoteException {
-		MatchesPO[] matches = match.getMatches(toDate("2005-05-01"));
+		MatchesPO[] matches = match.getMatches(toDate("2015-06-11"));
 		print(matches);
 		assertEquals(true,true);
 	}
@@ -105,7 +105,7 @@ public class MatchDataTest {
 	@Test
 	public void testMatchLiveIdFind() throws RemoteException
 	{
-		CurrentMatch m = match.getLiveMatchesById(150119);
+		CurrentMatch m = match.getLiveMatchesById(150122);
 		int matchId = -1;
 		CurrentMatch  s = null;
 		SimpleMatchLive[] matches = match.getAllLiveMatches();

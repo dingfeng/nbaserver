@@ -182,7 +182,7 @@ public class PlayerDataTest {
 	@Test
 	public void testPlayerHot() throws RemoteException
 	{
-		HotPlayerTeam[] hots = player.getDayHotPlayer(getDate("2014-06-10"), HotType.ASSIST);
+		HotPlayerTeam[] hots = player.getDayHotPlayer(getDate("2015-06-11"), HotType.ASSIST);
 		print(hots);
 	}
 	public static Date getDate(String date)
