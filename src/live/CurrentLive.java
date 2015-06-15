@@ -45,7 +45,7 @@ public class CurrentLive {
 		{
 			print(list.get(i));
 		}	try {
-			Thread.sleep(2000);
+			Thread.sleep(7000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
